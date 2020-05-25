@@ -24,10 +24,10 @@ const requestFormatMap = {
         };
     },
     baidu(q) {
-        const appid = '账户appid';
+        const appid = '20200516000457875';
         const salt = 'xxxx-xxxx-xxxx-xxxx-xxxx'.replace(/x{4,4}/g, Math.ceil(Math.random() * 10000)).replace(/-/g, '');
         const getSign = (q) => {
-            const key = '账户密钥';
+            const key = 'lxa5f05dOITqIMIRxdO4';
             return md5(appid + q + salt + key);
         };
         return {

@@ -33,6 +33,8 @@ protocol.registerSchemesAsPrivileged([{
 function setAppTray() {
     // 托盘对象
     let appTray = null
+    // 托盘图标
+    const icon = path.join(__dirname, `${isDevelopment ? '../public/' : ''}tray_favicon.ico`);
     // 系统托盘右键菜单
     const trayMenuTemplate = [{
         label: '关于',
@@ -40,7 +42,7 @@ function setAppTray() {
             dialog.showMessageBoxSync(win, {
                 title: '关于软件',
                 type: 'info',
-                icon: path.join(__dirname, 'tray_favicon.ico'),
+                icon,
                 message: '作者：Murray\n名称：工作助手\n简介：为工作中的一些较为简单、重复的工作需求提供自动化帮助。\n版本号：1.0.0'
             });
         }
@@ -52,7 +54,7 @@ function setAppTray() {
         }
     }];
     // 系统托盘图标目录
-    appTray = new Tray(path.join(__dirname, 'tray_favicon.ico'));
+    appTray = new Tray(icon);
     // 图标的上下文菜单
     const contextMenu = Menu.buildFromTemplate(trayMenuTemplate);
     // 设置此托盘图标的悬停提示内容

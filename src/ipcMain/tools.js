@@ -15,7 +15,7 @@ export function deleteFile(filePath, autoJoin = true) {
     }
 }
 /**
- * 转换字符串为json格式
+ * 转换字符串为js对象
  * @param {*} str 字符串
  */
 export function transferToObject(str) {

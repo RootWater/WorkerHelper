@@ -132,7 +132,15 @@
                            spellcheck
                            readonly
                            icon="md-copy"
-                           @on-click="copyFullKey" />
+                           @on-click="copyFullKey">
+                    <Select v-model="fullKeyPrefix"
+                            slot="prepend"
+                            style="width: 120px">
+                        <Option v-for="(prefix, index) in prefixList"
+                                :key="index"
+                                :value="prefix">{{prefix}}</Option>
+                    </Select>
+                    </Input>
                 </FormItem>
             </Form>
             <template slot="footer">
@@ -196,6 +204,12 @@ export default {
             treeMap: {}, // 树映射
             mode: "common", // 当前模式
             searchCondition: "", // 搜索条件
+            fullKeyPrefix: "STORE.state.lang.", // 完整引用的前缀
+            prefixList: [
+                "STORE.state.lang.",
+                "this.$store.state.lang.",
+                "$store.state.lang."
+            ], // 前缀列表
             nodeActionButtons: [
                 {
                     name: "expand",
@@ -654,10 +668,13 @@ export default {
          * 复制完整引用
          */
         copyFullKey() {
-            const el = this.$refs.fullKeyInput.$el.querySelector("input");
-            el.select();
-            document.execCommand("Copy");
-            this.$Message.success("复制成功");
+            const fullKey = this.fullKeyPrefix + this.editNodeForm.fullKey;
+            navigator.clipboard
+                .writeText(fullKey)
+                .then(res => this.$Message.success("复制成功"))
+                .catch(err =>
+                    this.$Message.error("复制失败，请重试或手动复制")
+                );
         },
         /**
          * 保存文件
